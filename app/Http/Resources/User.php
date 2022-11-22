@@ -17,11 +17,13 @@ class User extends JsonResource
          return [
             "id" => $this->id,
             "nom" => $this->nom,
-            "prenoms" => $this->prenoms,
+            "prenoms" => ($this->prenoms != null)?$this->prenoms:"",
             "email" => ($this->email != null)?$this->email:"",
             "telephone" => ($this->telephone != null)?$this->telephone:"",
             "pseudo" => ($this->pseudo != null)?$this->pseudo:"",
             "ville" => ($this->ville != null)?$this->ville:"",
+            "quartier" => ($this->quartier != null)?$this->quartier:"",
+            "date_debut" => ($this->date_debut != null)?$this->date_debut:"",
             "pays" => ($this->pays != null)?$this->pays:"",
             "token" => $this->token,
             "type_user" => $this->type_user,
@@ -31,13 +33,9 @@ class User extends JsonResource
             "last_diplome" => $this->last_diplome,
             "last_experience" => $this->last_experience,
             "job" => $this->job,
-            "solde" => $this->solde,
-            "sexe" => ($this->sexe != null)?$this->sexe:"",
             "password" => $this->password,
             "avatar" => $this->avatar,
-            "status" => $this->status,
-            "code" => ($this->code != null)?$this->code:"",
-            "otp" => ($this->otp != null)?$this->otp:"",
+            "status" => $this->status
         ];
     }
 }

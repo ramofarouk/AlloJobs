@@ -20,82 +20,28 @@ class SoumissionController extends Controller
      {
         $args = array();
         $args['error'] = false;
-        $nom = $request->last_name;
-        $prenoms = $request->first_name;
-        $telephone = $request->telephone;
-        $ville = $request->ville;
-        $email = $request->email;
-        $profession = $request->profession;
-        $date_naissance = $request->date_naissance;
-        $cni = $request->cni;
-        $cniGarant = $request->cni_garant;
-        $photo = $request->photo;
-        $certificat = $request->certificat;
-        $produit = $request->produit;
+        $user_id = $request->user_id;
+        $entreprise_id = $request->entreprise_id;
+        $cv = $request->cv;
         try {
 
-            $cniToSet ="";
-            if($cni != "" && $cni != null){
+            $cvToSet ="";
+            if($cv != "" && $cv != null){
                 $reference = getRamdomText(5);
-                $cniToSet = "/docs/".$nom . $reference . ".jpg";
-                $ImagePath = public_path('/docs') . "/" . $nom . $reference . ".jpg";
-                file_put_contents($ImagePath,base64_decode($cni));
+                $cvToSet = "/cvs/" . $reference . ".pdf";
+                $ImagePath = public_path('/cvs') . "/" . $reference . ".pdf";
+                file_put_contents($ImagePath,base64_decode($cv));
             }
 
-            $cniGarantToSet ="";
-            if($cniGarant != "" && $cniGarant != null){
-                $reference = getRamdomText(5);
-                $cniGarantToSet = "/docs/".$nom . $reference . ".jpg";
-                $ImagePath = public_path('/docs') . "/" . $nom . $reference . ".jpg";
-                file_put_contents($ImagePath,base64_decode($cniGarant));
-            }
-
-            $photoToSet ="";
-            if($photo != "" && $photo != null){
-                $reference = getRamdomText(5);
-                $photoToSet = "/docs/".$nom . $reference . ".jpg";
-                $ImagePath = public_path('/docs') . "/" . $nom . $reference . ".jpg";
-                file_put_contents($ImagePath,base64_decode($photo));
-            }
-
-            $certificatToSet ="";
-            if($certificat != "" && $certificat != null){
-                $reference = getRamdomText(5);
-                $certificatToSet = "/docs/".$nom . $reference . ".jpg";
-                $ImagePath = public_path('/docs') . "/" . $nom . $reference . ".jpg";
-                file_put_contents($ImagePath,base64_decode($certificat));
-            }
-
-            $pseudo = getRamdomInt(8);
-            $password = getRamdomText(5);
-            $user = User::create([
-                'nom' => $nom,
-                'prenoms' => $prenoms,
-                'telephone' => $telephone,
-                'email' => $email,
-                'ville' => $ville,
-                'profession' => $profession,
-                'date_naissance' => $date_naissance,
-                'pseudo' => $pseudo,
-                'password_visible' => $password,
-                'password' => bcrypt($password),
-                'token' => getRamdomText(20),
-                'status' => 0
-            ]);
-
-            $reservation = Soumission::create([
+            $soumission = Soumission::create([
                 'reference' => getRamdomText(20),
-                'cni_souscripteur' => $cniToSet,
-                'cni_garant' => $cniGarantToSet,
-                'certificat_residence' => $certificatToSet,
-                'photo' => $photoToSet,
-                'produit_id' => $produit,
-                'status' => 0,
-                'user_id'=>$user->id
+                'cv' => $cvToSet,
+                'entreprise_id' => $entreprise_id,
+                'status' => 1,
+                'demandeur_id'=>$user_id
             ]);
 
-
-            $args['message'] = "Compte crée avec succès!";           
+            $args['message'] = "Soumission effectuée avec succès!";           
 
         } catch (\Exception $e) {
             $args['error'] = true;

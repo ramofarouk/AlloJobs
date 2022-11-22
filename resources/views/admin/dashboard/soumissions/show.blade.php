@@ -41,7 +41,7 @@ Liste des Soumissions
 							@foreach($soumissions as $soumission)
 							<tr>
 								<td>
-									<a href="{{ $soumission->demandeur->photo }}" target="_blank"><img alt="{{$soumission->demandeur->nom}}" width="100" height="50" src="{{ $soumission->demandeur->photo }}" class="rounded"></a>
+									<a href="{{ $soumission->demandeur->avatar }}" target="_blank"><img alt="{{$soumission->demandeur->nom}}" width="75" height="75" src="{{ $soumission->demandeur->avatar }}" class="rounded-circle"></a>
 								</td>
 								<td>{{$soumission->demandeur->nom}} {{$soumission->demandeur->prenoms}}</td>
 								<td>{{$soumission->entreprise->nom}}</td>
