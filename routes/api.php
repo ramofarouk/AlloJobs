@@ -26,19 +26,6 @@ use Illuminate\Support\Facades\Route;
         Route::post("auth/update-password", "App\Http\Controllers\Api\ApiAuthController@updatePassword");
         Route::post("auth/update-infos", "App\Http\Controllers\Api\ApiAuthController@updateInfos");
         Route::post("auth/update-avatar", "App\Http\Controllers\Api\ApiAuthController@updateAvatar");
-    /*
-        Api Produit
-    */
-        Route::get("produits/all", "App\Http\Controllers\Api\ProduitController@all");
-        Route::get("produits/details/{id}", "App\Http\Controllers\Api\ProduitController@details");
-
-          /*
-        Api Point
-    */
-        Route::get("points/all", "App\Http\Controllers\Api\PointRechargeController@all");
-        Route::get("points/details/{id}", "App\Http\Controllers\Api\PointRechargeController@details");
-
-
 
         Route::post("reservations/add", "App\Http\Controllers\Api\ReservationController@add");
         Route::post("reservations/{id}", "App\Http\Controllers\Api\ReservationController@show");

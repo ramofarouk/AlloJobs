@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('activite')->nullable();
             $table->string('password')->nullable();
             $table->string('cv')->nullable();
+            $table->string('last_diplome')->nullable();
+            $table->string('last_experience')->nullable();
+            $table->string('job')->nullable();
             $table->string('password_visible')->nullable();
             $table->string('ville')->nullable();
             $table->string('profession')->nullable();
