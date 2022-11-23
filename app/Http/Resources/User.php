@@ -15,7 +15,7 @@ class User extends JsonResource
     public function toArray($request)
     {
          return [
-            "id" => $this->id,
+            "id" => intval($this->id),
             "nom" => $this->nom,
             "prenoms" => ($this->prenoms != null)?$this->prenoms:"",
             "email" => ($this->email != null)?$this->email:"",
@@ -26,7 +26,7 @@ class User extends JsonResource
             "date_debut" => ($this->date_debut != null)?$this->date_debut:"",
             "pays" => ($this->pays != null)?$this->pays:"",
             "token" => $this->token,
-            "type_user" => $this->type_user,
+            "type_user" => intval($this->type_user),
             "cv" => $this->cv,
             "description" => $this->description,
             "activite" => $this->activite,
@@ -35,7 +35,7 @@ class User extends JsonResource
             "job" => $this->job,
             "password" => $this->password,
             "avatar" => $this->avatar,
-            "status" => $this->status
+            "status" => intval($this->status)
         ];
     }
 }

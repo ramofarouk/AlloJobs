@@ -55,6 +55,7 @@ Liste des Candidats
 									<i class="fe-eye "></i>
 								</button>
 								@endif
+								
 							</td>
 						</tr>
 						<div class="modal fade" id="viewCard{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

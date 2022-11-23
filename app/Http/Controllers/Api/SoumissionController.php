@@ -37,7 +37,7 @@ class SoumissionController extends Controller
                 'reference' => getRamdomText(20),
                 'cv' => $cvToSet,
                 'entreprise_id' => $entreprise_id,
-                'status' => 1,
+                'status' => 0,
                 'demandeur_id'=>$user_id
             ]);
 

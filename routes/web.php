@@ -30,6 +30,7 @@ Route::prefix('admin')->group(function () {
         Route::match(['get', 'post'], '/journaux', 'App\Http\Controllers\Admin\DashboardController@journaux');
         Route::match(['get', 'post'], '/candidats', 'App\Http\Controllers\Admin\DashboardController@candidats');
         Route::match(['get', 'post'], '/entreprises', 'App\Http\Controllers\Admin\DashboardController@entreprises');
+        Route::match(['get', 'post'], '/entreprises/validate/{id}', 'App\Http\Controllers\Admin\DashboardController@validateSoumission');
 
         Route::match(['get', 'post'], '/admins', 'App\Http\Controllers\Admin\AdminController@show');
         Route::match(['get', 'post'], '/admins/add', 'App\Http\Controllers\Admin\AdminController@add');
@@ -44,6 +45,7 @@ Route::prefix('admin')->group(function () {
 
         
         Route::match(['get', 'post'], '/soumissions', 'App\Http\Controllers\Admin\SoumissionController@show');
+         Route::match(['get', 'post'], '/soumissions/validate/{id}', 'App\Http\Controllers\Admin\SoumissionController@validateSoumission');
 
         Route::get('/logout', 'App\Http\Controllers\Admin\DashboardController@logout');    
     });

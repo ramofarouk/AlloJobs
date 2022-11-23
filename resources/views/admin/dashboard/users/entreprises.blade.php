@@ -53,12 +53,35 @@ Liste des Entreprises
 									<i class="fe-eye "></i>
 								</button>
 								@endif
-								<button class="btn btn-success" type="button" data-bs-toggle="modal"
-								data-bs-target="#checkCard{{$user->id}}">
-								<i class="fe-check "></i>
-							</button>
+								@if($user->status==0)
+									<button class="btn btn-success" type="button" data-bs-toggle="modal"
+									data-bs-target="#checkCard{{$user->id}}">
+									<i class="fe-check"></i>
+								</button>
+								@endif
+								
 						</td>
 					</tr>
+					<div class="modal fade" id="checkCard{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Validation</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p>Etes-vous sûr de valider ce profil?</p>
+									</div>
+									<div class="modal-footer bg-whitesmoke br">
+
+										<button type="button" class="btn btn-danger" style="color:white;" data-bs-dismiss="modal">Fermer</button>
+										<a href="/admin/entreprises/validate/{{$user->id}}"
+											class="btn btn-success"> Oui</a>
+										</div>
+									</div>
+								</div>
+							</div>
 					<div class="modal fade" id="viewCard{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">

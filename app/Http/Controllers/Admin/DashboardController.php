@@ -105,6 +105,16 @@ class DashboardController extends Controller
         return view('admin.dashboard.users.candidats', compact('users'));
     }
 
+    public function validateSoumission(Request $request,$idUser)
+    {
+        $id = session('id');
+        User::where(['id' => $idUser])->update([
+            'status' => 1
+        ]);
+
+        return redirect()->back()->with('flash_message_success', 'Profil validé avec succès!');
+    }
+
     public function entreprises()
     {
         $id = session('id');

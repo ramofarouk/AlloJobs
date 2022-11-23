@@ -161,7 +161,7 @@ class ApiAuthController extends Controller
                     'quartier' => $quartier,
                     'date_debut' => $date_debut,
                     'token' => getRamdomText(20),
-                    'status' => 1,
+                    'status' => 0,
                     'type_user' => 2
                 ]);
 
@@ -169,6 +169,63 @@ class ApiAuthController extends Controller
                 $user = User::where(['telephone' => $telephone])->first();
                 $args['user'] = new UserResource($user);
                 $args['message'] = "Compte crée avec succès!";
+            } else {
+                $args['error'] = true;
+            }
+
+        } catch (\Exception $e) {
+            $args['error'] = true;
+            $args['error_message'] = $e->getMessage();
+            $args['message'] = "Erreur lors de la récupération des informations";
+        }
+        return response()->json($args);
+    }
+
+     /**
+     * @group  Api Authentification User
+     *
+     */
+      public function updateEntreprise(Request $request)
+      {
+        $args = array();
+        $args['error'] = false;
+        $nom = $request->name;
+        $user_id = $request->user_id;
+        $ville = $request->ville;
+        $email = $request->email;
+        $activite = $request->activite;
+        $description = $request->description;
+        $poste = $request->poste;
+        $avatar = $request->avatar;
+        $quartier = $request->quartier;
+        $date_debut = $request->date_debut;
+
+        try {
+            if (User::where(['id' => $user_id])->first()) {
+                $user = User::where(['id' => $user_id])->first();
+                $avatarToSet ="/avatars/default.png";
+                if($avatar != "" && $avatar != null){
+                    $reference = getRamdomText(5);
+                    $avatarToSet = "/avatars/".$nom . $reference . ".jpg";
+                    $ImagePath = public_path('/avatars') . "/" . $nom . $reference . ".jpg";
+                    file_put_contents($ImagePath,base64_decode($avatar));
+                }
+                $user->update([
+                    'nom' => $nom,
+                    'description' => $description,
+                    'activite' => $activite,
+                    'job' => $poste,
+                    'ville' => $ville,
+                    'email' => $email,
+                    'avatar' => $avatarToSet,
+                    'quartier' => $quartier,
+                    'date_debut' => $date_debut
+                ]);
+
+
+                $user = User::where(['id' => $user_id])->first();
+                $args['user'] = new UserResource($user);
+                $args['message'] = "Compte modifiée avec succès!";
             } else {
                 $args['error'] = true;
             }

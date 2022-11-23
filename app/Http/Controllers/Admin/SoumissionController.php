@@ -22,4 +22,15 @@ class SoumissionController extends Controller
         return view('admin.dashboard.soumissions.show', compact('soumissions'));
     }
 
+    public function validateSoumission(Request $request,$idSoumission)
+    {
+        $id = session('id');
+        $soumission = Soumission::where(['id' => $idSoumission])->first();
+        Soumission::where(['id' => $idSoumission])->update([
+            'status' => 1
+        ]);
+
+        return redirect()->back()->with('flash_message_success', 'Message d\'accpetation envoyé au candidat!');
+    }
+
 }

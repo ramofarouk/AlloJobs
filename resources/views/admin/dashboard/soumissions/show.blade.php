@@ -45,17 +45,42 @@ Liste des Soumissions
 								</td>
 								<td>{{$soumission->demandeur->nom}} {{$soumission->demandeur->prenoms}}</td>
 								<td>{{$soumission->entreprise->nom}}</td>
-								<td>{{$soumission->cv}}</td>
+								<td><a target="_blank" class="btn btn-info" href="{{$soumission->cv}}">Voir le CV</a></td>
 								<td>
-									
-								</td>
-							</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
+									@if($soumission->status==0)
+									<button class="btn btn-success" type="button" data-bs-toggle="modal"
+									data-bs-target="#checkCard{{$soumission->id}}">
+									<i class="fe-check"></i>
+								</button>
+								@endif
+							</td>
+						</tr>
+						<div class="modal fade" id="checkCard{{$soumission->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Validation</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p>Etes-vous sûr d'envoyer un message d'acceptation au candidat?</p>
+									</div>
+									<div class="modal-footer bg-whitesmoke br">
+
+										<button type="button" class="btn btn-danger" style="color:white;" data-bs-dismiss="modal">Fermer</button>
+										<a href="/admin/soumissions/validate/{{$soumission->id}}"
+											class="btn btn-success"> Oui</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						@endforeach
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 @endsection
