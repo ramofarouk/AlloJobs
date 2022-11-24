@@ -47,12 +47,9 @@ Liste des Entreprises
 								<td>{{$user->ville}}</td>
 								<td>{{$user->activite}}</td>
 								<td>
-									@if($user->status == 1)
-									<button class="btn btn-ino" type="button" data-bs-toggle="modal"
-									data-bs-target="#viewCard{{$user->id}}">
+									<a class="btn btn-info" href="/admin/entreprises/details/{{$user->id}}">
 									<i class="fe-eye "></i>
-								</button>
-								@endif
+								</a>
 								@if($user->status==0)
 									<button class="btn btn-success" type="button" data-bs-toggle="modal"
 									data-bs-target="#checkCard{{$user->id}}">

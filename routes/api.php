@@ -34,9 +34,12 @@ use Illuminate\Support\Facades\Route;
         Route::post("chat/send/{id}/{id2}", "App\Http\Controllers\Api\ApiController@send");
 
         Route::get("candidats", "App\Http\Controllers\Api\ApiController@candidats");
-        Route::get("entreprises", "App\Http\Controllers\Api\ApiController@entreprises");
+        Route::get("entreprises", "App\Http\Controllers\Api\OffreController@all");
 
         Route::post("soumission/add", "App\Http\Controllers\Api\SoumissionController@add");
-        Route::post("soumision/{id}", "App\Http\Controllers\Api\SoumissionController@show");
+        Route::post("soumission/{id}", "App\Http\Controllers\Api\SoumissionController@show");
+
+        Route::post("offres/add", "App\Http\Controllers\Api\OffreController@add");
+        Route::get("offres/{id}", "App\Http\Controllers\Api\OffreController@show");
 
         Route::post("feedback", "App\Http\Controllers\Api\ApiController@feedback");

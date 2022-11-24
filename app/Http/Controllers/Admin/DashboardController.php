@@ -11,6 +11,7 @@ use App\Models\Admin;
 use App\Models\Entreprise;
 use App\Models\Soumission;
 use App\Models\User;
+use App\Models\Offre;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Session;
@@ -105,6 +106,16 @@ class DashboardController extends Controller
         return view('admin.dashboard.users.candidats', compact('users'));
     }
 
+    public function deleteProfile(Request $request,$idUser)
+    {
+        $id = session('id');
+        User::where(['id' => $idUser])->update([
+            'status' => 0
+        ]);
+
+        return redirect()->back()->with('flash_message_success', 'Profil supprimé avec succès!');
+    }
+
     public function validateSoumission(Request $request,$idUser)
     {
         $id = session('id');
@@ -113,6 +124,14 @@ class DashboardController extends Controller
         ]);
 
         return redirect()->back()->with('flash_message_success', 'Profil validé avec succès!');
+    }
+
+    public function detailsEntreprises(Request $request,$idUser)
+    {
+        $id = session('id');
+        $entreprise = User::where(['id' => $idUser])->first();
+        $offres = Offre::where(['status' => 1])->orderBy("created_at", 'DESC')->get();
+        return view('admin.dashboard.users.details_entreprise', compact('offres','entreprise'));
     }
 
     public function entreprises()

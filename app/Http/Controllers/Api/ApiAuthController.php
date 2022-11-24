@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Parametre;
+use App\Models\Offre;
 use App\Http\Resources\User as UserResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -65,8 +66,8 @@ class ApiAuthController extends Controller
 
         try {
             if (!User::where(['telephone' => $telephone])->first()) {
-               $cvToSet ="";
-               if($cv != "" && $cv != null){
+             $cvToSet ="";
+             if($cv != "" && $cv != null){
                 $reference = getRamdomText(5);
                 $cvToSet = "/cvs/".$nom . $reference . ".jpg";
                 $ImagePath = public_path('/cvs') . "/" . $nom . $reference . ".jpg";
@@ -146,6 +147,9 @@ class ApiAuthController extends Controller
                     $ImagePath = public_path('/avatars') . "/" . $nom . $reference . ".jpg";
                     file_put_contents($ImagePath,base64_decode($avatar));
                 }
+
+
+
                 $user = User::create([
                     'nom' => $nom,
                     'telephone' => $telephone,
@@ -163,6 +167,14 @@ class ApiAuthController extends Controller
                     'token' => getRamdomText(20),
                     'status' => 0,
                     'type_user' => 2
+                ]);
+
+                $soumission = Offre::create([
+                    'date_debut' => $date_debut,
+                    'description' => $description,
+                    'job' => $poste,
+                    'status' => 1,
+                    'user_id'=>$user->id
                 ]);
 
 
@@ -185,8 +197,8 @@ class ApiAuthController extends Controller
      * @group  Api Authentification User
      *
      */
-      public function updateEntreprise(Request $request)
-      {
+     public function updateEntreprise(Request $request)
+     {
         $args = array();
         $args['error'] = false;
         $nom = $request->name;
@@ -194,11 +206,11 @@ class ApiAuthController extends Controller
         $ville = $request->ville;
         $email = $request->email;
         $activite = $request->activite;
-        $description = $request->description;
-        $poste = $request->poste;
+       // $description = $request->description;
+        //$poste = $request->poste;
         $avatar = $request->avatar;
         $quartier = $request->quartier;
-        $date_debut = $request->date_debut;
+        //$date_debut = $request->date_debut;
 
         try {
             if (User::where(['id' => $user_id])->first()) {
@@ -212,14 +224,14 @@ class ApiAuthController extends Controller
                 }
                 $user->update([
                     'nom' => $nom,
-                    'description' => $description,
+                    //'description' => $description,
                     'activite' => $activite,
-                    'job' => $poste,
+                    //'job' => $poste,
                     'ville' => $ville,
                     'email' => $email,
                     'avatar' => $avatarToSet,
                     'quartier' => $quartier,
-                    'date_debut' => $date_debut
+                    //'date_debut' => $date_debut
                 ]);
 
 
