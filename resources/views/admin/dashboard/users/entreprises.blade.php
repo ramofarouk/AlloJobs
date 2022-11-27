@@ -56,10 +56,36 @@ Liste des Entreprises
 									<i class="fe-check"></i>
 								</button>
 								@endif
+								@if($user->status!=99)
+									<button class="btn btn-danger" type="button" data-bs-toggle="modal"
+									data-bs-target="#trashCard{{$user->id}}">
+									<i class="fe-trash"></i>
+								</button>
+								@endif
 								
 						</td>
 					</tr>
-					<div class="modal fade" id="checkCard{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+					<div class="modal fade" id="trashCard{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p>Etes-vous sûr de supprimer cette entreprise?</p>
+									</div>
+									<div class="modal-footer bg-whitesmoke br">
+
+										<button type="button" class="btn btn-danger" style="color:white;" data-bs-dismiss="modal">Fermer</button>
+										<a href="/admin/entreprises/delete/{{$user->id}}"
+											class="btn btn-success"> Oui</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal fade" id="checkCard{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 							aria-hidden="true">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">

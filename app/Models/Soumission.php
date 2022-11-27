@@ -31,4 +31,8 @@ class Soumission extends Model
     {
         return $this->belongsTo('App\Models\User', 'entreprise_id');
     }
+    public function offre()
+    {
+        return $this->belongsTo('App\Models\Offre', 'entreprise_id');
+    }
 }

@@ -44,7 +44,11 @@ Liste des Soumissions
 									<a href="{{ $soumission->demandeur->avatar }}" target="_blank"><img alt="{{$soumission->demandeur->nom}}" width="75" height="75" src="{{ $soumission->demandeur->avatar }}" class="rounded-circle"></a>
 								</td>
 								<td>{{$soumission->demandeur->nom}} {{$soumission->demandeur->prenoms}}</td>
+								@if($soumission->entreprise != null)
 								<td>{{$soumission->entreprise->nom}}</td>
+								@else
+								<td>{{$soumission->offre->entreprise->nom}}</td>
+								@endif
 								<td><a target="_blank" class="btn btn-info" href="{{$soumission->cv}}">Voir le CV</a></td>
 								<td>
 									@if($soumission->status==0)

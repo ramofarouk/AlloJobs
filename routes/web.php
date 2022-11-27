@@ -32,6 +32,7 @@ Route::prefix('admin')->group(function () {
         Route::match(['get', 'post'], '/candidats/delete/{id}', 'App\Http\Controllers\Admin\DashboardController@deleteProfile');
         Route::match(['get', 'post'], '/entreprises', 'App\Http\Controllers\Admin\DashboardController@entreprises');
         Route::match(['get', 'post'], '/entreprises/validate/{id}', 'App\Http\Controllers\Admin\DashboardController@validateSoumission');
+        Route::match(['get', 'post'], '/entreprises/delete/{id}', 'App\Http\Controllers\Admin\DashboardController@deleteEntreprise');
         Route::match(['get', 'post'], '/entreprises/details/{id}', 'App\Http\Controllers\Admin\DashboardController@detailsEntreprises');
 
         Route::match(['get', 'post'], '/admins', 'App\Http\Controllers\Admin\AdminController@show');

@@ -125,6 +125,15 @@ class DashboardController extends Controller
 
         return redirect()->back()->with('flash_message_success', 'Profil validé avec succès!');
     }
+    public function deleteEntreprise(Request $request,$idUser)
+    {
+        $id = session('id');
+        User::where(['id' => $idUser])->update([
+            'status' => 99
+        ]);
+
+        return redirect()->back()->with('flash_message_success', 'Profil validé avec succès!');
+    }
 
     public function detailsEntreprises(Request $request,$idUser)
     {
@@ -137,7 +146,7 @@ class DashboardController extends Controller
     public function entreprises()
     {
         $id = session('id');
-        $users = User::where(['type_user' => 2])->orderBy("created_at", 'DESC')->get();
+        $users = User::where(['type_user' => 2])->where('status','!=',99)->orderBy("created_at", 'DESC')->get();
         return view('admin.dashboard.users.entreprises', compact('users'));
     }
 
