@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Route;
         Route::post("auth/register", "App\Http\Controllers\Api\ApiAuthController@register");
         Route::post("auth/register-entreprise", "App\Http\Controllers\Api\ApiAuthController@registerEntreprise");
         Route::post("auth/update-entreprise", "App\Http\Controllers\Api\ApiAuthController@updateEntreprise");
+         Route::post("auth/update-user", "App\Http\Controllers\Api\ApiAuthController@updateUser");
+         Route::post("auth/delete-user", "App\Http\Controllers\Api\ApiAuthController@deleteUser");
         Route::post("auth/check", "App\Http\Controllers\Api\ApiAuthController@check");
         Route::post("auth/update-password", "App\Http\Controllers\Api\ApiAuthController@updatePassword");
         Route::post("auth/update-infos", "App\Http\Controllers\Api\ApiAuthController@updateInfos");

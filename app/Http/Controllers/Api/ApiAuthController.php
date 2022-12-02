@@ -24,8 +24,8 @@ class ApiAuthController extends Controller
         $telephone = $request->telephone;
         //$password = $request->password;
         try {
-            if (User::where(['telephone' => $telephone])->first()) {
-                $user = User::where(['telephone' => $telephone])->first();
+            if (User::where(['telephone' => $telephone,'status' => 1])->first()) {
+                $user = User::where(['telephone' => $telephone,'status' => 1])->first();
                 $args['user'] = new UserResource($user);
                 $args['message'] = "Informations recupérées avec succès!";
             } else {
@@ -249,6 +249,62 @@ class ApiAuthController extends Controller
         }
         return response()->json($args);
     }
+    /**
+     * @group  Api Authentification User
+     *
+     */
+     public function updateUser(Request $request)
+     {
+        $args = array();
+        $args['error'] = false;
+        $user_id = $request->user_id;
+        $nom = $request->last_name;
+        $prenoms = $request->first_name;
+        $ville = $request->ville;
+        $email = $request->email;
+        $biographie = $request->biographie;
+        $last_diplome = $request->last_diplome;
+        $last_experience = $request->last_experience;
+        $job = $request->job;
+        $avatar = $request->avatar;
+
+        try {
+            if (User::where(['id' => $user_id])->first()) {
+                $user = User::where(['id' => $user_id])->first();
+                $avatarToSet ="/avatars/default.png";
+                if($avatar != "" && $avatar != null){
+                    $reference = getRamdomText(5);
+                    $avatarToSet = "/avatars/".$nom . $reference . ".jpg";
+                    $ImagePath = public_path('/avatars') . "/" . $nom . $reference . ".jpg";
+                    file_put_contents($ImagePath,base64_decode($avatar));
+                }
+                $user->update([
+                    'nom' => $nom,
+                'prenoms' => $prenoms,
+                'description' => $biographie,
+                'last_diplome' => $last_diplome,
+                'last_experience' => $last_experience,
+                'job' => $job,
+                'ville' => $ville,
+                'email' => $email,
+                'avatar' => $avatarToSet
+                ]);
+
+
+                $user = User::where(['id' => $user_id])->first();
+                $args['user'] = new UserResource($user);
+                $args['message'] = "Compte modifiée avec succès!";
+            } else {
+                $args['error'] = true;
+            }
+
+        } catch (\Exception $e) {
+            $args['error'] = true;
+            $args['error_message'] = $e->getMessage();
+            $args['message'] = "Erreur lors de la récupération des informations";
+        }
+        return response()->json($args);
+    }
      /**
      * @group  Api Authentification User
      *
@@ -268,6 +324,33 @@ class ApiAuthController extends Controller
                 }else{
                     $args['error'] = true;
                 }
+                
+            } else {
+                $args['error'] = true;
+            }
+
+        } catch (\Exception $e) {
+            $args['error'] = true;
+            $args['error_message'] = $e->getMessage();
+            $args['message'] = "Erreur lors de la récupération des informations";
+        }
+        return response()->json($args);
+    }
+    /**
+     * @group  Api Authentification User
+     *
+     */
+     public function deleteUser(Request $request)
+     {
+        $args = array();
+        $args['error'] = false;
+        $userId = $request->user_id;
+        try {
+            if (User::where(['id' => $userId])->first()) {
+                $user = User::where(['id' => $userId])->first();
+                $user->update([
+                    'status' => 0
+                ]);
                 
             } else {
                 $args['error'] = true;
