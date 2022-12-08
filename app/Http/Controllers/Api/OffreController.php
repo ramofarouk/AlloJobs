@@ -52,7 +52,7 @@ class OffreController extends Controller
 public function show(Request $request, $idUser)
 {
     return response()->json(
-        OffreResource::collection(Offre::where('user_id', '=', $idUser)->orderBy('created_at','DESC')->get())
+        OffreResource::collection(Offre::where('user_id', '=', $idUser)->orderBy('date_debut','ASC')->get())
     );
 }
 
@@ -64,7 +64,7 @@ public function show(Request $request, $idUser)
     public function all(Request $request)
     {
         return response()->json(
-            OffreResource::collection(Offre::where('status', '=', 1)->orderBy('created_at','DESC')->get())
+            OffreResource::collection(Offre::where('status', '=', 1)/*->where('date_debut', '>=', date('Y-m-d'))*/->orderBy('date_debut','ASC')->get())
         );
     }
 
