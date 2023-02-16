@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $id = session('id');
         $nbreEntreprises= User::where(['status' =>1,'type_user'=>2])->get()->count();
         $nbreDemandeurs= User::where(['status' =>1,'type_user'=>1])->get()->count();
-        $nbreSoumissions = Soumission::where(['status' =>1])->get()->count();
+        $nbreSoumissions = Soumission::get()->count();
 
         return view('admin.dashboard.index', compact('nbreEntreprises','nbreSoumissions','nbreDemandeurs'));
         
@@ -139,7 +139,7 @@ class DashboardController extends Controller
     {
         $id = session('id');
         $entreprise = User::where(['id' => $idUser])->first();
-        $offres = Offre::where(['status' => 1])->orderBy("created_at", 'DESC')->get();
+        $offres = Offre::where(['status' => 1,'user_id' => $idUser])->orderBy("created_at", 'DESC')->get();
         return view('admin.dashboard.users.details_entreprise', compact('offres','entreprise'));
     }
 
