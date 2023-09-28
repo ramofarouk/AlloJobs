@@ -12,14 +12,14 @@ class Soumission extends Model
 
 
     /**
-    * The primary key for the model.
-    *
-    * @var string
-    */
+     * The primary key for the model.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'reference','cv','entreprise_id','demandeur_id','status'
+        'reference', 'cv', 'entreprise_id', 'demandeur_id', 'status'
     ];
 
     public function demandeur()
@@ -27,10 +27,6 @@ class Soumission extends Model
         return $this->belongsTo('App\Models\User', 'demandeur_id');
     }
 
-    public function entreprise()
-    {
-        return $this->belongsTo('App\Models\User', 'entreprise_id');
-    }
     public function offre()
     {
         return $this->belongsTo('App\Models\Offre', 'entreprise_id');

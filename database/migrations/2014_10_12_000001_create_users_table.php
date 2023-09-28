@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telephone')->nullable();
             $table->string('pseudo')->nullable();
             $table->text('description')->nullable();
+            $table->string('quartier')->nullable();
             $table->string('activite')->nullable();
             $table->string('password')->nullable();
             $table->string('cv')->nullable();
@@ -38,7 +39,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('code')->nullable();
             $table->string('otp')->nullable();
-            $table->unsignedBigInteger('type_user')->default(1);// 1:Client || 2:Entreprise
+            $table->unsignedBigInteger('type_user')->default(1); // 1:Client || 2:Entreprise
             $table->unsignedBigInteger('status')->default(1);
             $table->rememberToken();
             $table->timestamps();

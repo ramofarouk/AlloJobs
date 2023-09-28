@@ -12,7 +12,6 @@ if (!function_exists('getAdminAuth')) {
     $id = session('id');
     $admin = Admin::where(['id' => $id])->first();
     return $admin;
-    
   }
 }
 
@@ -22,7 +21,6 @@ if (!function_exists('getParameters')) {
   {
     $parametre = Parametre::where(['libelle' => $libelle])->first();
     return $parametre->valeur;
-    
   }
 }
 
@@ -40,7 +38,6 @@ if (!function_exists('getUserById')) {
   {
     $user = User::where(['id' => $idUser])->first();
     return $user;
-    
   }
 }
 
@@ -49,18 +46,18 @@ if (!function_exists('getUserIsLogged')) {
   {
     $id = session('id');
     $isUser = session('is_user');
-    if($id > 0 && $isUser > 0){
+    if ($id > 0 && $isUser > 0) {
       return 1;
     }
     return 0;
-    
   }
 }
 
 
 // Random string
 if (!function_exists('getRamdomText')) {
-  function getRamdomText($n) {
+  function getRamdomText($n)
+  {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randomString = '';
 
@@ -73,7 +70,8 @@ if (!function_exists('getRamdomText')) {
 }
 // int string
 if (!function_exists('getRamdomInt')) {
-  function getRamdomInt($n) {
+  function getRamdomInt($n)
+  {
     $characters = '0123456789';
     $randomString = '';
 
@@ -90,7 +88,7 @@ if (!function_exists('checkApiToken')) {
   function checkApiToken($token)
   {
     $admin = Admin::where(['id' => 1])->first();
-    if (Hash::check($token,$admin['token'])) {
+    if (Hash::check($token, $admin['token'])) {
       return 1;
     } else {
       return 0;
@@ -113,7 +111,7 @@ if (!function_exists('formatDate')) {
     $formatDates = explode("T", $date);
     $elements = explode(" ", $formatDates[0]);
     $elements2 = explode("-", $elements[0]);
-    $date = $elements2[2] . "-" . $elements2[1] . "-" . $elements2[0] . " " .$elements[1];
+    $date = $elements2[2] . "-" . $elements2[1] . "-" . $elements2[0] . " " . $elements[1];
     return $date;
   }
 }
@@ -125,8 +123,8 @@ if (!function_exists('superFormatDate')) {
     $elements = explode(" ", $formatDates[0]);
     $elements2 = explode("-", $elements[0]);
 
-    $timeFormat=explode(":", $elements[1]);
-    $date = $elements2[2] . "-" . $elements2[1] . "-" . $elements2[0] . " à " . $timeFormat[0].":".$timeFormat[1];
+    $timeFormat = explode(":", $elements[1]);
+    $date = $elements2[2] . "-" . $elements2[1] . "-" . $elements2[0] . " à " . $timeFormat[0] . ":" . $timeFormat[1];
     return $date;
   }
 }
@@ -159,10 +157,11 @@ if (!function_exists('formatDateSimple')) {
 
 
 if (!function_exists('reinitializePassword')) {
-  function reinitializePassword($email,$name,$code) {
-    $values = '{"name_user": "'. $name .'","code": "'. $code .'"}';
-                // dd($values);
-    $mj = new \Mailjet\Client('418b953927031140d7b31bd860fc3b8f','3cdf33b3c0b9a81cb24d28a00d9b3753',true,['version' => 'v3.1']);
+  function reinitializePassword($email, $name, $code)
+  {
+    $values = '{"name_user": "' . $name . '","code": "' . $code . '"}';
+    // dd($values);
+    $mj = new \Mailjet\Client('418b953927031140d7b31bd860fc3b8f', '3cdf33b3c0b9a81cb24d28a00d9b3753', true, ['version' => 'v3.1']);
     $body = [
       'Messages' => [
         [
@@ -194,25 +193,83 @@ if (!function_exists('reinitializePassword')) {
 }
 
 if (!function_exists('getMonthName')) {
-        function getMonthName($monthOfYear)
-        {
-          $arrayMonth = array(
-           1 => "Janvier",
-           2 => "Février",
-           3 => "Mars",
-           4 => "Avril",
-           5 => "Mai",
-           6 => "Juin",
-           7 => "Juillet",
-           8 => "Aôut",
-           9 => "Septembre",
-           10 => "Octobre",
-           11 => "Novembre",
-           12 => "Décembre"
-         );
-          $month =  $arrayMonth[$monthOfYear];
-          return $month;
-        }
-      }
+  function getMonthName($monthOfYear)
+  {
+    $arrayMonth = array(
+      1 => "Janvier",
+      2 => "Février",
+      3 => "Mars",
+      4 => "Avril",
+      5 => "Mai",
+      6 => "Juin",
+      7 => "Juillet",
+      8 => "Aôut",
+      9 => "Septembre",
+      10 => "Octobre",
+      11 => "Novembre",
+      12 => "Décembre"
+    );
+    $month =  $arrayMonth[$monthOfYear];
+    return $month;
+  }
+}
 
-?>
+if (!function_exists('sendCV')) {
+  function sendCV($soumission)
+  {
+    $message = "Bonjour <b>" . $soumission->offre->entreprise->nom . "," .
+      "</b><br>Veuillez trouver en pièce jointe le CV du candidat " . $soumission->demandeur->prenoms . " " . $soumission->demandeur->nom . " pour l'offre de <b>" . $soumission->offre->job .
+      "</b>.<br><br>Cordialement,";
+
+    $mailjetApiKey = 'c9760fa3fab00eb253dbf5edf299a5d6';
+    $mailjetApiSecret = '229bbf87d869421a1eaa588f24c57752';
+    $pdfBase64 = base64_encode(file_get_contents(public_path() . $soumission->cv));
+    $data = [
+      'Messages' => [
+        [
+          'From' => [
+            'Email' => "no-reply@kofcorporation.com",
+            'Name' => "ALLÔJOBS AFRICA"
+          ],
+          'To' => [
+            [
+              'Email' => $soumission->offre->entreprise->email,
+              'Name' => $soumission->offre->entreprise->nom
+            ]
+          ],
+          'Subject' => "Soumission de " . $soumission->demandeur->prenoms . " " . $soumission->demandeur->nom,
+          'TextPart' => $message,
+          'HTMLPart' => $message,
+          'Attachments' => [
+            [
+              'ContentType' => "application/pdf",
+              'Filename' => $soumission->demandeur->prenoms . "_cv.pdf",
+              'Base64Content' =>  $pdfBase64
+            ]
+          ]
+        ]
+      ]
+    ];
+    try {
+      $dataString = json_encode($data);
+      $ch = curl_init('https://api.mailjet.com/v3.1/send');
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+      curl_setopt($ch, CURLOPT_USERPWD, "{$mailjetApiKey}:{$mailjetApiSecret}");
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt(
+        $ch,
+        CURLOPT_HTTPHEADER,
+        array(
+          'Content-Type: application/json',
+          'Content-Length: ' . strlen($dataString)
+        )
+      );
+      $response = json_decode(curl_exec($ch));
+    } catch (Exception $e) {
+      echo "erreur " . $e->getMessage();
+    }
+
+    // return $response;
+  }
+}
